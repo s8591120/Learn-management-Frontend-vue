@@ -4,7 +4,7 @@ import router from "../router";
 
 //建立axios對象
 const request = axios.create({
-  baseURL: "/api",
+  baseURL: "https://lms-backend-4q3j.onrender.com",
   timeout: 600000,
 });
 //axios的請求request攔截器--獲取localStorage的token

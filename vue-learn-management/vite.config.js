@@ -14,13 +14,21 @@ export default defineConfig({
   },
 
   server: {
-    proxy: {
-      "/api": {
-        target: "htttp:localhost:8080",
-        secure: false,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
+    proxy: !isProduction
+      ? {
+          "/api": {
+            target: "http:localhost:8080", //本地地址
+            secure: false,
+            changeOrigin: true,
+            rewrite: (path) => path.replace(/^\/api/, ""),
+          },
+        }
+      : undefined,
+  },
+
+  define: {
+    __API_BASE_URL__: isProduction
+      ? JSON.stringify("https://lms-backend-4q3j.onrender.com")
+      : JSON.stringify("/api"),
   },
 });

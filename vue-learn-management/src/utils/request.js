@@ -30,13 +30,17 @@ request.interceptors.response.use(
   },
   (error) => {
     //失敗
-    if (error.response.status == 401) {
-      //提示訊息
-      ElMessage.error("登錄超時，請重新登錄");
-      //跳轉到登錄頁面
-      router.push("/login");
+    if (error.response) {
+      if (error.response.status === 401) {
+        ElMessage.error("登錄超時，請重新登錄");
+        router.push("/login");
+      } else {
+        ElMessage.error("接口訪問異常");
+      }
+    } else if (error.request) {
+      ElMessage.error("無法連接到服務器，請稍後重試");
     } else {
-      ElMessage.error("接口訪問異常");
+      ElMessage.error("請求錯誤：" + error.message);
     }
     return Promise.reject(error);
   }

@@ -28,23 +28,22 @@ onMounted(() => {
 });
 
 //退出登錄
-const logout = () => {
-  ElMessageBox.confirm("確認退出登錄嗎?", "提示", {
-    confirmButtonText: "確認",
-    cancelButtonText: "取消",
-    type: "warning",
-  })
-    .then(async () => {
-      //確認
-      ElMessage.success("退出成功");
-      localStorage.removeItem("loginUser");
-      //跳轉頁面
-      router.push("/login");
-    })
-    .catch(() => {
-      //取消
-      ElMessage.info("已取消退出");
+const logout = async () => {
+  try {
+    await ElMessageBox.confirm("確認退出登錄嗎?", "提示", {
+      confirmButtonText: "確認",
+      cancelButtonText: "取消",
+      type: "warning",
     });
+    //確認
+    ElMessage.success("退出成功");
+    localStorage.removeItem("loginUser");
+    //跳轉頁面
+    await router.push("/login");
+  } catch (err) {
+    //取消
+    ElMessage.info("已取消退出");
+  }
 };
 </script>
 
